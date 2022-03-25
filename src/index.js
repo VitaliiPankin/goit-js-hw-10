@@ -1,11 +1,15 @@
 import Notiflix from 'notiflix';
+
 import './css/styles.css';
 import API from '../src/js/fetchCountries';
+import Hello from '../src/js/ua';
 import { debounce } from 'throttle-debounce';
 
 Notiflix.Notify.init({
   useIcon: false,
-});
+  });
+
+  
 
 const DEBOUNCE_DELAY = 300;
 
@@ -21,7 +25,7 @@ refs.input.addEventListener('input', debounce(DEBOUNCE_DELAY, true, onSearchCoun
 
 function onSearchCountry(evt) {
   const a = evt.currentTarget.value.trim();
-console.log(a)
+
   API.fetchCountry(a)
     .then(renderCountry)
     .catch(error => {
@@ -33,16 +37,20 @@ function renderCountry(country) {
   refs.countryList.textContent = '';
   refs.countryInfo.textContent = '';
 
+  
   if (country.length > 10) {
     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
-  } else if (country.length >= 2 && country.length <= 10) {
-    for (let i = 0; i < country.length; i += 1) {
+    
+      } else if (country.length >= 2 && country.length <= 10) {
+    
+    for (let i = 0; i < country.length; i += 1) {      
       refs.countryList.insertAdjacentHTML(
         'beforeend',
         `<li><img  class="img_js" 
             src="${country[i].flags.svg}" alt="${country[i].name.common}"><h2>${country[i].name.common}</h2></li>`,
       );
     }
+    Hello.UA()
   } else if (country.length === 1) {
     refs.countryList.insertAdjacentHTML(
       'beforeend',
@@ -70,3 +78,4 @@ function renderCountry(country) {
     Notiflix.Notify.failure(`❌ Oops, there is no country with that name`);
   }
 }
+
