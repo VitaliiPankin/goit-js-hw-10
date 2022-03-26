@@ -1,6 +1,6 @@
 function fetchCountry(countryNameInput) {
   return fetch(
-    `https://restcountries.com/v2/name/${countryNameInput}`,
+    `https://restcountries.com/v2/name/${countryNameInput}?fields=name,capital,population,flags,languages`,
   ).then(response => {
     if (!response.ok) {
       throw new Error(response.status);
@@ -11,4 +11,3 @@ function fetchCountry(countryNameInput) {
 export default { fetchCountry };
 
 
-// ?fields=name,capital,population,flags,languages
