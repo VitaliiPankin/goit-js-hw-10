@@ -23,18 +23,20 @@ refs.input.addEventListener('input', debounce(DEBOUNCE_DELAY, true, onSearchCoun
 
 function onSearchCountry(evt) {
   const a = evt.currentTarget.value.trim();
-
+  if(a.length === 0){
+    refs.countryList.textContent = '';
+    refs.countryInfo.textContent = '';
+  }
   API.fetchCountry(a)
     .then(renderCountry)
     .catch(error => {
       Notiflix.Notify.failure(`❌ Oops, there is no country with that name`);
     });
-}
+   }
 
 function renderCountry(country) {
   refs.countryList.textContent = '';
   refs.countryInfo.textContent = '';
-
   if (country.length > 10) {
     Notiflix.Notify.info('Too many matches found. Please enter a more specific name.');
   } else if (country.length >= 2 && country.length <= 10) {
@@ -49,8 +51,6 @@ function renderCountry(country) {
     Hello.UA();
     Def.Default();
   } else if (country.length === 1) {
-    
-    
     refs.countryList.insertAdjacentHTML(
       'beforeend',
       `<li><img  class="img_js" 
@@ -66,15 +66,12 @@ function renderCountry(country) {
         Number(country[0].population) / 1000000
       ).toFixed(3)} million</span></h2>`,
     );
-    const languagesCountry = country[0].languages.map(languages => languages.name)
+    const languagesCountry = country[0].languages.map(languages => languages.name);
     refs.countryInfo.insertAdjacentHTML(
       'beforeend',
       `<h2 class="country_js">Languages: <span class="country_info">${languagesCountry}</span></h2>`,
     );
-    
   } else {
     Notiflix.Notify.failure(`❌ Oops, there is no country with that name`);
   }
 }
-
-

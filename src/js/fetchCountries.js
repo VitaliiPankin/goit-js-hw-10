@@ -9,5 +9,3 @@ function fetchCountry(countryNameInput) {
   });
 }
 export default { fetchCountry };
-
-
